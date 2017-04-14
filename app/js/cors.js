@@ -11,6 +11,8 @@ function createCORSRequest(method, url, callback) {
         if(xhr.readyState == 4) {
             try {
                 if((xhr.status >= 200 && xhr.status < 300) || xhr == 304) {
+                    // 访问头部信息
+                    console.log(xhr.getResponseHeader('Date'));
                     callback && callback(xhr.response);
                 } else {
                     console.log('Request was unsuccessful: ' + xhr.status);

@@ -49,7 +49,7 @@ app.use(cors({
         }
         return false;
     },
-    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization', 'Date'],
     maxAge: 100,
     credentials: true,
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
