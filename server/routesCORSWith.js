@@ -10,7 +10,7 @@ const bodyParser = require('koa-bodyparser');
 module.exports = (router) => {
     router.get('/userInfo/:id', bodyParser(), function(ctx, next) {
         // 用bodyParser解析出来参数
-        console.log(`get ${ctx.url}`, ctx.request);
+        // console.log(`get ${ctx.url}`, ctx.request);
         ctx.body = {
             status: 200,
             data: {

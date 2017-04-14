@@ -43,6 +43,9 @@ app.use(cors({
             return `http://${packageData.url}:7000`;
         } else if(regexp.test(ctx.url)) {
             return '*'
+        } else if(~String(ctx.url).indexOf('/imgs/')) {
+            return `http://${packageData.url}:7000`
+            // return '*'
         }
         return false;
     },
@@ -50,7 +53,7 @@ app.use(cors({
     maxAge: 5,
     credentials: true,
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header', 'anonymous'],
 }));
 
 app.use(router.routes());
