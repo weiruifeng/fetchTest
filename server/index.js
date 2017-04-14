@@ -14,6 +14,8 @@ const cors = require('koa2-cors');
 const routes = require('./routes');
 
 const routesCORS = require('./routesCORS');
+const routesCORSWith = require('./routesCORSWith');
+
 
 const packageData = require("../package.json");
 
@@ -31,7 +33,7 @@ let routerCORSWith = new Router({prefix: '/CORSWith'});
 // 配置Python那边的路由
 routes(router);
 routesCORS(routerCORS);
-routesCORS(routerCORSWith);
+routesCORSWith(routerCORSWith);
 
 app.use(cors({
     origin: function(ctx) {
@@ -47,8 +49,8 @@ app.use(cors({
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 5,
     credentials: true,
-    allowMethods: ['GET', 'POST', 'DELETE'],
-    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header'],
 }));
 
 app.use(router.routes());

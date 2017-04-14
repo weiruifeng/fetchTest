@@ -11,23 +11,9 @@ module.exports = (router) => {
         ctx.body = {
             status: 200,
             data: {
-                nickname: '天涯路远',
-                token: 'get token',
+                explain: '我是不带credentials参数的请求，我的Access-Control-Allow-Origin头部可以为*，不携带身份凭证',
                 params: ctx.params
             }
         };
     });
-
-    router.post('/userInfo/:id', bodyParser(), function(ctx, next) {
-        // 用bodyParser解析出来参数
-        console.log('post CORS', ctx.request.body);
-        ctx.body = {
-            status: 200,
-            data: {
-                nickname: '天涯路远',
-                token: 'post token',
-                params: ctx.params
-            }
-        };
-    })
 };

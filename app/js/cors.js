@@ -5,13 +5,13 @@
 
 const url = '127.0.0.1:4000';
 
-function createCORSRequest(method, url) {
-    var xhr = new XMLHttpRequest();
+function createCORSRequest(method, url, callback) {
+    let xhr = new XMLHttpRequest();
     xhr.onload = function() {
         if(xhr.readyState == 4) {
             try {
                 if((xhr.status >= 200 && xhr.status < 300) || xhr == 304) {
-                    console.log(xhr.response);
+                    callback && callback(xhr.response);
                 } else {
                     console.log('Request was unsuccessful: ' + xhr.status);
                 }
@@ -31,13 +31,44 @@ function createCORSRequest(method, url) {
     return xhr;
 }
 
-var requestWith = createCORSRequest('get', `http://${url}/CORSWith/userInfo/12`);
-if(requestWith) {
-    requestWith.withCredentials = true;
-    requestWith.send();
+function corsWith(data) {
+    $('#corsWith').html(data);
 }
 
-var request = createCORSRequest('get', `http://${url}/CORS/userInfo/12`);
-if(request) {
-    request.send();
+function cors(data) {
+    $('#cors').html(data);
 }
+
+$(function(){
+    let requestWith = createCORSRequest('get', `http://${url}/CORSWith/userInfo/12`,corsWith);
+    if(requestWith) {
+        requestWith.withCredentials = true;
+        requestWith.send();
+    }
+
+    let request = createCORSRequest('get', `http://${url}/CORS/userInfo/12`,cors);
+    if(request) {
+        request.send();
+    }
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('PUT', `http://${url}/CORSWith/userGroup`, true);
+    xhr.setRequestHeader('X-Custom-Header', 'value');
+    xhr.onload = function() {
+        if(xhr.readyState == 4) {
+            try {
+                if(xhr.status == 200) {
+                    $('#put').html(xhr.response);
+                    // OPTION请求
+                } else if(xhr.status == 204){
+                    $('#option').html('asass');
+                } else {
+                    console.log('Request was unsuccessful: ' + xhr.status);
+                }
+            } catch(ex) {
+                new Error(ex);
+            }
+        }
+    };
+    xhr.send();
+});

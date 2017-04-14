@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>cors</title>
+    <script src="js/zepto.js"></script>
 </head>
 <body>
+<h2>跨域加withCredentials</h2>
+<div id="corsWith"></div>
+
+<h2>跨域不加withCredentials</h2>
 <div id="cors"></div>
-<div id="common"></div>
+
+<h2>跨域方法为PUT时先进行OPTION</h2>
+<div id="option"></div>
+
+<h2>跨域方法为PUT</h2>
+<div id="put"></div>
+
 <script src="js/cors.js"></script>
 </body>
 </html>
