@@ -44,13 +44,13 @@ app.use(cors({
         } else if(regexp.test(ctx.url)) {
             return '*'
         } else if(~String(ctx.url).indexOf('/imgs/')) {
-            return `http://${packageData.url}:7000`
+            return `http://${packageData.url}:7000`;
             // return '*'
         }
         return false;
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-    maxAge: 5,
+    maxAge: 100,
     credentials: true,
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header', 'anonymous'],

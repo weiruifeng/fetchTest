@@ -39,35 +39,6 @@ function cors(data) {
     $('#cors').html(data);
 }
 
-/**
- * 在canvas上画图片
- * @param id
- * @param url
- */
-function drawCanvas(id, url) {
-    let canvas = document.getElementById(id);
-    let ctx = canvas.getContext('2d');
-
-    var img = document.createElement('img');
-    img.src = url;
-    img.crossOrigin = 'anonymous';
-
-    // 必须等到图片完全加载后才能对其进行操作。浏览器通常会在页面脚本执行的同时异步加载图片。如果试图在图片未完全加载之前就将其呈现到canvas上，那么canvas将不会显示任何图片
-    if (img.complete) {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage( img, 0, 0 );
-    } else {
-        img.onload = function () {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0 );
-            const src = canvas.toDataURL(" image/jpeg", 0.3);
-            $('#canvasImg').attr('src', src);
-        };
-    }
-}
-
 $(function(){
     let requestWith = createCORSRequest('get', `http://${url}/CORSWith/userInfo/12`,corsWith);
     if(requestWith) {
@@ -102,7 +73,42 @@ $(function(){
     };
     xhr.send();
 
+
+    /**
+     * 在canvas上画图片
+     * @param id
+     * @param drawId
+     * @param url
+     * @param corsFlag
+     */
+    function drawCanvas(id, drawId, url, corsFlag) {
+        let canvas = document.getElementById(id);
+        let ctx = canvas.getContext('2d');
+
+        var img = document.createElement('img');
+        img.src = url;
+        if(corsFlag) {
+            img.crossOrigin = 'anonymous';
+        }
+
+        // 必须等到图片完全加载后才能对其进行操作。浏览器通常会在页面脚本执行的同时异步加载图片。如果试图在图片未完全加载之前就将其呈现到canvas上，那么canvas将不会显示任何图片
+        if (img.complete) {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0 );
+        } else {
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0 );
+                const src = canvas.toDataURL(" image/jpeg", 0.3);
+                $(drawId).attr('src', src);
+            };
+        }
+    }
+
     // 图片跨域的情况
-    drawCanvas('corsCanvas', 'http://127.0.0.1:4000/imgs/headIcon.jpg');
+    drawCanvas('corsCanvas', '#canvasCorsImg', 'http://127.0.0.1:4000/imgs/headIcon.jpg', true);
+    drawCanvas('canvas', '#canvasImg', 'http://127.0.0.1:4000/corsImg/headIcon.jpg');
 });
 
