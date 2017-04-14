@@ -50,7 +50,7 @@ function drawCanvas(id, url) {
 
     var img = document.createElement('img');
     img.src = url;
-    img.crossOrigin = 'X-Custom-Header';
+    img.crossOrigin = 'anonymous';
 
     // 必须等到图片完全加载后才能对其进行操作。浏览器通常会在页面脚本执行的同时异步加载图片。如果试图在图片未完全加载之前就将其呈现到canvas上，那么canvas将不会显示任何图片
     if (img.complete) {
