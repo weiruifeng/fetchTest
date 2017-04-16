@@ -6,7 +6,7 @@
 ## 说明
 fetch还没有写，只是写了一部分关于cors的请求
 
-###cors请求
+### cors请求
 页面：http://127.0.0.1:7000/cors.html
 
 cors请求页面包括简单请求(get)、需要预检请求(put)、canvas.toDataURL()的三种跨域请求的实例
